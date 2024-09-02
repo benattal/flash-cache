@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+<head>
+<title>Flash Cache | Supplemental Results</title>
+<link href="resources/style.css" rel="stylesheet"/>
+<script src="resources/handlers.js"></script>
+<script>
+window.onload = function() {
+  vidcmp_dyn_tensoir_handler = new VideoHandler(4, 5, "vidcmp_dyn_tensoir_data", "vidcmp_dyn_tensoir_btn", "vidcmp_dyn_tensoir_vid");
+  vidcmp_dyn_tensoir_handler.register();
+  try {
+    vidcmp_dyn_tensoir_handler.play_video();
+  } catch (e) {
+  }
+
+  vidcmp_dyn_tensoir_multi_handler = new VideoHandler(4, 5, "vidcmp_dyn_tensoir_multi_data", "vidcmp_dyn_tensoir_multi_btn", "vidcmp_dyn_tensoir_multi_vid");
+  vidcmp_dyn_tensoir_multi_handler.register();
+  try {
+    vidcmp_dyn_tensoir_multi_handler.play_video();
+  } catch (e) {
+  }
+
+  vidcmp_dyn_open_handler = new VideoHandler(10, 5, "vidcmp_dyn_open_data", "vidcmp_dyn_open_btn", "vidcmp_dyn_open_vid");
+  vidcmp_dyn_open_handler.register();
+  try {
+    vidcmp_dyn_open_handler.play_video();
+  } catch (e) {
+  }
+
+  vidcmp_dyn_tensoir_incoming_handler = new VideoHandler(4, 4, "vidcmp_dyn_tensoir_incoming_data", "vidcmp_dyn_tensoir_incoming_btn", "vidcmp_dyn_tensoir_incoming_vid");
+  vidcmp_dyn_tensoir_incoming_handler.register();
+  try {
+    vidcmp_dyn_tensoir_incoming_handler.play_video();
+  } catch (e) {
+  }
+};
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZ6PES7EKD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RZ6PES7EKD');
+</script>
+</head>
+<body class="results">
+
+<!-- links -->
+<h2>Table of Contents</h2>
+<div>
+  <ul>
+    <li><a href="#vidcmp_dyn_tensoir_incoming">TensoIR Incoming</a></li>
+    <li><a href="#vidcmp_dyn_tensoir">TensoIR Single-Light Results</a></li>
+    <li><a href="#vidcmp_dyn_tensoir_multi">TensoIR Multi-Light Results</a></li>
+    <li><a href="#vidcmp_dyn_open">Open Illumination Multi-Light Results</a></li>
+  </ul>
+</div>
+
+<h2 id="vidcmp_dyn_tensoir_incoming">
+  TensoIR-Synthetic Incoming Visualization
+  <span><a href="#top">&uarr;</a></span>
+</h2>
+<div class="flex">
+  <div>
+    <div class="flex">
+      <div>
+        <button id="vidcmp_dyn_tensoir_incoming_data0" value="armadillo_incoming">Armadillo</button>
+        <button id="vidcmp_dyn_tensoir_incoming_data1" value="ficus_incoming">Ficus</button>
+        <button id="vidcmp_dyn_tensoir_incoming_data2" value="hotdog_incoming" class="on">Hotdog</button>
+        <button id="vidcmp_dyn_tensoir_incoming_data3" value="lego_incoming">Lego</button>
+      </div>
+      <div class="wider_buttons">
+        <button id="vidcmp_dyn_tensoir_incoming_btn0" value="point" class="on">Point to Visualize</button>
+        <button id="vidcmp_dyn_tensoir_incoming_btn1" value="cache">NeRF Cache</button>
+        <button id="vidcmp_dyn_tensoir_incoming_btn2" value="flash">Fast Cache</button>
+        <button id="vidcmp_dyn_tensoir_incoming_btn3" value="vmfs">VMFs</button>
+      </div>
+    </div>
+    <div class="desc">
+      <p>We visualize incoming radiance (including learned environment map) and VMFs on the TensoIR dataset.</p>
+    </div>
+  </div>
+  <div>
+    <video id="vidcmp_dyn_tensoir_incoming_vid0" controls loop class="on">
+      <source src="videos/hotdog_incoming_point.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_incoming_vid1" controls loop>
+      <source src="videos/hotdog_incoming_cache.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_incoming_vid2" controls loop>
+      <source src="videos/hotdog_incoming_flash.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_incoming_vid3" controls loop>
+      <source src="videos/hotdog_incoming_vmfs.mp4" type="video/mp4"/>
+    </video>
+  </div>
+</div>
+
+<h2 id="vidcmp_dyn_tensoir">
+  TensoIR-Synthetic Single-Light Results
+  <span><a href="#top">&uarr;</a></span>
+</h2>
+<div class="flex">
+  <div>
+    <div class="flex">
+      <div>
+        <button id="vidcmp_dyn_tensoir_data0" value="armadillo">Armadillo</button>
+        <button id="vidcmp_dyn_tensoir_data1" value="ficus">Ficus</button>
+        <button id="vidcmp_dyn_tensoir_data2" value="hotdog" class="on">Hotdog</button>
+        <button id="vidcmp_dyn_tensoir_data3" value="lego">Lego</button>
+      </div>
+      <div class="wider_buttons">
+        <button id="vidcmp_dyn_tensoir_btn0" value="normals" class="on">Normals</button>
+        <button id="vidcmp_dyn_tensoir_btn1" value="albedo">Albedo</button>
+        <button id="vidcmp_dyn_tensoir_btn2" value="roughness">Roughness</button>
+        <button id="vidcmp_dyn_tensoir_btn3" value="relight_1">Relighting 1</button>
+        <button id="vidcmp_dyn_tensoir_btn4" value="relight_2">Relighting 2</button>
+      </div>
+    </div>
+    <div class="desc">
+      <p>We show normals, albedo, roughness, relighting on the TensoIR dataset.</p>
+    </div>
+  </div>
+  <div>
+    <video id="vidcmp_dyn_tensoir_vid0" controls loop class="on">
+      <source src="videos/hotdog_normals.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_vid1" controls loop>
+      <source src="videos/hotdog_albedo.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_vid2" controls loop>
+      <source src="videos/hotdog_roughness.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_vid3" controls loop>
+      <source src="videos/hotdog_relight_1.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_vid4" controls loop>
+      <source src="videos/hotdog_relight_2.mp4" type="video/mp4"/>
+    </video>
+  </div>
+</div>
+
+<h2 id="vidcmp_dyn_tensoir_multi">
+  TensoIR-Synthetic Multi-Light Results
+  <span><a href="#top">&uarr;</a></span>
+</h2>
+<div class="flex">
+  <div>
+    <div class="flex">
+      <div>
+        <button id="vidcmp_dyn_tensoir_multi_data0" value="armadillo_multi">Armadillo</button>
+        <button id="vidcmp_dyn_tensoir_multi_data1" value="ficus_multi">Ficus</button>
+        <button id="vidcmp_dyn_tensoir_multi_data2" value="hotdog_multi" class="on">Hotdog</button>
+        <button id="vidcmp_dyn_tensoir_multi_data3" value="lego_multi">Lego</button>
+      </div>
+      <div class="wider_buttons">
+        <button id="vidcmp_dyn_tensoir_multi_btn0" value="normals" class="on">Normals</button>
+        <button id="vidcmp_dyn_tensoir_multi_btn1" value="albedo">Albedo</button>
+        <button id="vidcmp_dyn_tensoir_multi_btn2" value="roughness">Roughness</button>
+        <button id="vidcmp_dyn_tensoir_multi_btn3" value="relight_1">Relighting 1</button>
+        <button id="vidcmp_dyn_tensoir_multi_btn4" value="relight_2">Relighting 2</button>
+      </div>
+    </div>
+    <div class="desc">
+      <p>We show normals, albedo, roughness, relighting on the TensoIR multi-light dataset.</p>
+    </div>
+  </div>
+  <div>
+    <video id="vidcmp_dyn_tensoir_multi_vid0" controls loop class="on">
+      <source src="videos/hotdog_multi_normals.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_multi_vid1" controls loop>
+      <source src="videos/hotdog_multi_albedo.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_multi_vid2" controls loop>
+      <source src="videos/hotdog_multi_roughness.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_multi_vid3" controls loop>
+      <source src="videos/hotdog_multi_relight_1.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_tensoir_multi_vid4" controls loop>
+      <source src="videos/hotdog_multi_relight_2.mp4" type="video/mp4"/>
+    </video>
+  </div>
+</div>
+
+<h2 id="vidcmp_dyn_open">
+  Open Illumination Multi-Light Results
+  <span><a href="#top">&uarr;</a></span>
+</h2>
+<div class="flex">
+  <div>
+    <div class="flex">
+      <div>
+        <button id="vidcmp_dyn_open_data0" value="egg" class="on">Egg</button>
+        <button id="vidcmp_dyn_open_data1" value="stone">Stone</button>
+        <button id="vidcmp_dyn_open_data2" value="bird">Bird</button>
+        <button id="vidcmp_dyn_open_data3" value="box">Box</button>
+        <button id="vidcmp_dyn_open_data4" value="pumpkin">Pumpkin</button>
+        <button id="vidcmp_dyn_open_data5" value="hat">Hat</button>
+        <button id="vidcmp_dyn_open_data6" value="cup">Cup</button>
+        <button id="vidcmp_dyn_open_data7" value="sponge">Sponge</button>
+        <button id="vidcmp_dyn_open_data8" value="banana">Banana</button>
+        <button id="vidcmp_dyn_open_data9" value="bucket">Bucket</button>
+      </div>
+      <div class="wider_buttons">
+        <button id="vidcmp_dyn_open_btn0" value="normals" class="on">Normals</button>
+        <button id="vidcmp_dyn_open_btn1" value="albedo">Albedo</button>
+        <button id="vidcmp_dyn_open_btn2" value="roughness">Roughness</button>
+        <button id="vidcmp_dyn_open_btn3" value="relight_1">Relighting 1</button>
+        <button id="vidcmp_dyn_open_btn4" value="relight_2">Relighting 2</button>
+      </div>
+    </div>
+    <div class="desc">
+      <p>We show normals, albedo, roughness, relighting on the open dataset.</p>
+    </div>
+  </div>
+  <div>
+    <video id="vidcmp_dyn_open_vid0" controls loop class="on">
+      <source src="videos/egg_normals.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_open_vid1" controls loop>
+      <source src="videos/egg_albedo.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_open_vid2" controls loop>
+      <source src="videos/egg_roughness.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_open_vid3" controls loop>
+      <source src="videos/egg_relight_1.mp4" type="video/mp4"/>
+    </video>
+    <video id="vidcmp_dyn_open_vid4" controls loop>
+      <source src="videos/egg_relight_2.mp4" type="video/mp4"/>
+    </video>
+  </div>
+</div>
+
+</body>
+</html>

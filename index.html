@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html class="fontawesome-i2svg-active fontawesome-i2svg-complete"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="description" content="Flash Cache: Reducing Bias in Radiance Cache Based Inverse Rendering">
+  <meta name="keywords" content="NeRF, TensoIR">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flash Cache: Reducing Bias in Radiance Cache Based Inverse Rendering</title>
+
+  <style type="text/css">svg:not(:root).svg-inline--fa{overflow:visible}.svg-inline--fa{display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em}.svg-inline--fa.fa-lg{vertical-align:-.225em}.svg-inline--fa.fa-w-1{width:.0625em}.svg-inline--fa.fa-w-2{width:.125em}.svg-inline--fa.fa-w-3{width:.1875em}.svg-inline--fa.fa-w-4{width:.25em}.svg-inline--fa.fa-w-5{width:.3125em}.svg-inline--fa.fa-w-6{width:.375em}.svg-inline--fa.fa-w-7{width:.4375em}.svg-inline--fa.fa-w-8{width:.5em}.svg-inline--fa.fa-w-9{width:.5625em}.svg-inline--fa.fa-w-10{width:.625em}.svg-inline--fa.fa-w-11{width:.6875em}.svg-inline--fa.fa-w-12{width:.75em}.svg-inline--fa.fa-w-13{width:.8125em}.svg-inline--fa.fa-w-14{width:.875em}.svg-inline--fa.fa-w-15{width:.9375em}.svg-inline--fa.fa-w-16{width:1em}.svg-inline--fa.fa-w-17{width:1.0625em}.svg-inline--fa.fa-w-18{width:1.125em}.svg-inline--fa.fa-w-19{width:1.1875em}.svg-inline--fa.fa-w-20{width:1.25em}.svg-inline--fa.fa-pull-left{margin-right:.3em;width:auto}.svg-inline--fa.fa-pull-right{margin-left:.3em;width:auto}.svg-inline--fa.fa-border{height:1.5em}.svg-inline--fa.fa-li{width:2em}.svg-inline--fa.fa-fw{width:1.25em}.fa-layers svg.svg-inline--fa{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.fa-layers{display:inline-block;height:1em;position:relative;text-align:center;vertical-align:-.125em;width:1em}.fa-layers svg.svg-inline--fa{-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter,.fa-layers-text{display:inline-block;position:absolute;text-align:center}.fa-layers-text{left:50%;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter{background-color:#ff253a;border-radius:1em;-webkit-box-sizing:border-box;box-sizing:border-box;color:#fff;height:1.5em;line-height:1;max-width:5em;min-width:1.5em;overflow:hidden;padding:.25em;right:0;text-overflow:ellipsis;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-bottom-right{bottom:0;right:0;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom right;transform-origin:bottom right}.fa-layers-bottom-left{bottom:0;left:0;right:auto;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom left;transform-origin:bottom left}.fa-layers-top-right{right:0;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-top-left{left:0;right:auto;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top left;transform-origin:top left}.fa-lg{font-size:1.3333333333em;line-height:.75em;vertical-align:-.0667em}.fa-xs{font-size:.75em}.fa-sm{font-size:.875em}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:2.5em;padding-left:0}.fa-ul>li{position:relative}.fa-li{left:-2em;position:absolute;text-align:center;width:2em;line-height:inherit}.fa-border{border:solid .08em #eee;border-radius:.1em;padding:.2em .25em .15em}.fa-pull-left{float:left}.fa-pull-right{float:right}.fa.fa-pull-left,.fab.fa-pull-left,.fal.fa-pull-left,.far.fa-pull-left,.fas.fa-pull-left{margin-right:.3em}.fa.fa-pull-right,.fab.fa-pull-right,.fal.fa-pull-right,.far.fa-pull-right,.fas.fa-pull-right{margin-left:.3em}.fa-spin{-webkit-animation:fa-spin 2s infinite linear;animation:fa-spin 2s infinite linear}.fa-pulse{-webkit-animation:fa-spin 1s infinite steps(8);animation:fa-spin 1s infinite steps(8)}@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.fa-rotate-90{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.fa-rotate-180{-webkit-transform:rotate(180deg);transform:rotate(180deg)}.fa-rotate-270{-webkit-transform:rotate(270deg);transform:rotate(270deg)}.fa-flip-horizontal{-webkit-transform:scale(-1,1);transform:scale(-1,1)}.fa-flip-vertical{-webkit-transform:scale(1,-1);transform:scale(1,-1)}.fa-flip-both,.fa-flip-horizontal.fa-flip-vertical{-webkit-transform:scale(-1,-1);transform:scale(-1,-1)}:root .fa-flip-both,:root .fa-flip-horizontal,:root .fa-flip-vertical,:root .fa-rotate-180,:root .fa-rotate-270,:root .fa-rotate-90{-webkit-filter:none;filter:none}.fa-stack{display:inline-block;height:2em;position:relative;width:2.5em}.fa-stack-1x,.fa-stack-2x{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.svg-inline--fa.fa-stack-1x{height:1em;width:1.25em}.svg-inline--fa.fa-stack-2x{height:2em;width:2.5em}.fa-inverse{color:#fff}.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.sr-only-focusable:active,.sr-only-focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;width:auto}.svg-inline--fa .fa-primary{fill:var(--fa-primary-color,currentColor);opacity:1;opacity:var(--fa-primary-opacity,1)}.svg-inline--fa .fa-secondary{fill:var(--fa-secondary-color,currentColor);opacity:.4;opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-primary{opacity:.4;opacity:var(--fa-secondary-opacity,.4)}.svg-inline--fa.fa-swap-opacity .fa-secondary{opacity:1;opacity:var(--fa-primary-opacity,1)}.svg-inline--fa mask .fa-primary,.svg-inline--fa mask .fa-secondary{fill:#000}.fad.fa-inverse{color:#fff}</style><link href="./website_files/css" rel="stylesheet">
+
+  <link rel="stylesheet" href="./website_files/bulma.min.css">
+  <link rel="stylesheet" href="./website_files/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./website_files/bulma-slider.min.css">
+  <link rel="stylesheet" href="./website_files/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./website_files/academicons.min.css">
+  <link rel="stylesheet" href="./website_files/index.css">
+
+  <script src="./website_files/jquery.min.js.download"></script>
+  <script defer="" src="./website_files/fontawesome.all.min.js.download"></script>
+  <script src="./website_files/bulma-carousel.min.js.download"></script>
+  <script src="./website_files/bulma-slider.min.js.download"></script>
+  <script src="./website_files/index.js.download"></script>
+  <script src="./website_files/video_comparison.js.download"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h2 class="is-2 publication-title"><b>Flash Cache</b>: Reducing Bias in Radiance Cache Based Inverse Rendering</h2>
+            <br>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://www.battal.me/">Ben Attal<sup>1</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://dorverbin.github.io/">Dor Verbin<sup>2</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://bmild.github.io/">Ben Mildenhall<sup>2</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://phogzone.com/">Peter Hedman<sup>2</sup></a>,</span>
+              <span class="author-block">
+                <a href="https://jonbarron.info/">Jon Barron<sup>2</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.cs.cmu.edu/~motoole2/">Matt O'Toole<sup>1</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="https://pratulsrinivasan.github.io/">Pratul Srinivasan<sup>2</sup></a>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block is-size-5"><sup>1</sup>Carnegie Mellon University</span>
+              <span class="author-block is-size-5"><sup>2</sup>Google Research</span>
+            </div>
+
+            <div class="is-size-5 publication-venue">
+              ECCV 2024 <b><em>(Oral)</em></b>
+            </div>
+
+            <br>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="./supp/results.html" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <img class="invert" src="https://hyperreel.github.io/resources/file-earmark-code-fill.svg">
+                    </span>
+                    <span>Supplemental Results</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+                    </span>
+                    <span>Code (Coming Soon)</span>
+                  </a>
+                </span>
+
+                <!--
+                <span class="link-block">
+                  <a href="https://github.com/jonbarron/camp_zipnerf" class="external-link button is-normal is-rounded is-dark" title="Code">
+                    <span class="icon">
+                        <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                </span> -->
+    
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="columns is-mobile is-marginless has-text-centered">
+          <div class="column is-one-fourth">
+              <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/armadillo_albedo.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="column is-one-fourth">
+              <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/ficus_albedo.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="column is-one-fourth">
+              <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/hotdog_albedo.mp4" type="video/mp4">
+              </video>
+          </div>
+          <div class="column is-one-fourth">
+              <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/lego_albedo.mp4" type="video/mp4">
+              </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <h2 class="title is-3">Abstract</h2>
+      <div class="content has-text-justified">
+        <p>
+          State-of-the-art techniques for 3D reconstruction are largely based on volumetric scene representations, which require sampling multiple points to compute the color arriving along a ray.
+          Using these representations for more general inverse rendering --- reconstructing geometry, materials, and lighting from observed images --- is challenging because recursively path-tracing such volumetric representations is expensive.
+          Recent works alleviate this issue through the use of radiance caches: data structures that store the steady-state, infinite-bounce radiance arriving at any point from any direction.
+          However, these solutions rely on approximations that introduce bias into the renderings and, more importantly, into the gradients used for optimization.
+          We present a method that avoids these approximations while remaining computationally efficient.
+          In particular, we leverage two techniques to reduce variance for unbiased estimators of the rendering equation:
+        </p>
+  <ol>
+    <li>An occlusion-aware importance sampler for incoming illumination and </li>
+    <li>A fast cache architecture that can be used as a control variate for the radiance from a high-quality, but more expensive, volumetric cache.</li>
+  </ol>
+  <p>
+  We show that by removing these biases our approach improves the generality of radiance cache based inverse rendering, as well as increasing quality in the presence of challenging light transport effects such as specular interreflections.
+  </p>
+      </div>
+      <!--/ Abstract. -->
+
+      <!-- Paper video. -->
+      <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+      <!--/ Paper video. -->
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Radiance Caching for Inverse Rendering</h2>
+
+      <p>
+        Radiance caching is a technique to accelerate Monte Carlo estimation of the rendering integral, by storing incoming radiance at every point in a "cache".
+      </p>
+      <br>
+      <p>
+        A neural radiance field (NeRF) can function as a high-quality radiance cache, and one which requires fairly sparse supervision to train.
+        To illustrate, we show the distribution of incoming radiance for the 3D point intersected by the red pixel, as it sweeps across the scene.
+      </p>
+
+      <div class="columns is-mobile has-text-centered is-size-7-mobile">
+        <div class="column is-one-half has-text-justified">
+          <video  width=100% height=100% muted autoplay loop>
+            <source src="supp/videos/hotdog_incoming_point.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="column is-one-half">
+          <video  width=100% height=100% muted autoplay loop style="margin-top: 140px;">
+            <source src="supp/videos/hotdog_incoming_cache.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <div class="columns is-mobile has-text-centered is-size-7-mobile" style="margin-top: -75px;">
+        <div class="column is-one-half">Point to visualize</div>
+        <div class="column is-one-half">Incoming radiance cache</div>
+      </div>
+
+      <p>
+        In inverse rendering, we aim to reconstruct the scene geometry, materials, and lighting from observed images by optimizing through a differentiable rendering model.
+        A more accurate rendering model often means better reconstruction.
+        In this work, we aim to make the rendering model as physically-accurate as possible by using both <b>(a) volume rendering</b>, and <b>(b) a high-quality radiance cache</b>.
+      </p>
+
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Occlusion-Aware Importance Sampling</h2>
+
+      <p>
+        Unfortunately, high-quality radiance caches, like the one above, are often expensive to evaluate.
+        Variance reduction strategies, such as importance sampling, play an essential role in accelerating inference and decreasing rendering noise.
+      </p>
+      <br>
+      <p>
+        In this work we leverage a vMF importance sampler of incoming illumination, which is trained to match the distribution of incoming radiance from the cache.
+        Specifically, we use an NGP to predict the parameters of a mixture of vMFs distribution for each point in space, which can produce different lobes for different light sources.
+         Because the parameters of these distributions are spatially-varying, if a light source is occluded from the perspective of one surface point, then the model can “turn off” the lobe for that light source.
+      </p>
+
+      <div class="hero-body">
+        <div class="columns is-mobile is-marginless has-text-centered">
+          <div class="column is-one-half">
+            <video  width=100% height=100% muted autoplay loop>
+              <source src="supp/videos/hotdog_incoming_cache.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column is-one-half">
+            <video  width=100% height=100% muted autoplay loop>
+              <source src="supp/videos/hotdog_incoming_vmfs.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <div class="columns is-mobile has-text-centered is-marginless is-size-7-mobile">
+          <div class="column is-one-half">NeRF Cache</div>
+          <div class="column is-one-half">VMFs</div>
+        </div>
+      </div>
+
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+
+      <h2 class="title is-3">Fast Cache Control Variate</h2>
+
+      <p>
+        In addition to our occlusion-aware importance sampling scheme, we make use of control variates --- another technique from Monte Carlo rendering.
+      </p>
+      <br>
+      <p>
+        Here, we an accelerated "fast cache", a cheaper cache architecture that is trained to match the more expensive NeRF cache.
+        The fast cache can be used to produce a low-noise, inexpensive, but biased estimator of the rendering integral. 
+        Combining this with the unbiased estimator from the NeRF cache can reduce noise in the final rendering, while <em>remaining unbiased.</em>
+      </p>
+
+      <div class="hero-body">
+        <div class="columns is-mobile is-marginless has-text-centered">
+          <div class="column is-one-half">
+            <video  width=100% height=100% muted autoplay loop>
+              <source src="supp/videos/hotdog_incoming_cache.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="column is-one-half">
+            <video  width=100% height=100% muted autoplay loop>
+              <source src="supp/videos/hotdog_incoming_flash.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <div class="columns is-mobile has-text-centered is-marginless is-size-7-mobile">
+          <div class="column is-one-half">NeRF Cache</div>
+          <div class="column is-one-half">Fast Cache</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+
+      <h2 class="title is-3">Full System</h2>
+
+      <p>
+        Our full for inverse rendering system combines the high-quality radiance cache, occlusion-aware importance sampling, and fast cache control variate to produce low-cost and accurate approximation of the rendering integral.
+      </p>
+
+      <div class="hero-body">
+        <div class="columns is-mobile is-marginless has-text-centered">
+          <img src="website_files/pipeline.png">
+        </div>
+      </div>
+
+      <p>
+        Below, we show equal-sample-count renderings using (a) both the occlusion-aware importance sampler and fast cache control variate, (b) only the occlusion-aware importance sampler, and (c) neither.
+      </p>
+
+      <div class="hero-body">
+        <!-- Zoom Container. -->
+        <div class="zoom-container" data-gt-img-src="./static/images/variance_gt.png" data-zoom-factor="1"
+          data-default-u="0.5" data-default-v="0.7" id="teaser-zoom-container">
+          <div class="columns is-mobile is-marginless">
+            <div class="column is-one-fourth">
+              <div class="zoom-gt-container">
+                <!-- <img class="zoom-gt-img" src="./static/images/gardenchairs_gt.png" alt="Ground Truth" /> -->
+                <canvas></canvas>
+              </div>
+            </div>
+            <div class="column is-one-fourth">
+              <div class="zoom-lens" style="background-image: url(./static/images/variance_with_both.png)">
+              </div>
+            </div>
+            <div class="column is-one-fourth">
+              <div class="zoom-lens" style="background-image: url(./static/images/variance_with_light.png)">
+              </div>
+            </div>
+            <div class="column is-one-fourth">
+              <div class="zoom-lens"
+                style="background-image: url(./static/images/variance_with_neither.png)">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="columns is-mobile has-text-centered is-marginless is-size-7-mobile">
+          <div class="column is-one-fourth">Ground truth</div>
+          <div class="column is-one-fourth">(a) With Both</div>
+          <div class="column is-one-fourth">(b) With Sampler</div>
+          <div class="column is-one-fourth">(c) With Neither</div>
+        </div>
+        <div class="content has-text-centered is-size-7-mobile">
+          Interactive visualization. Hover or tap to move the zoom cursor.
+        </div>
+        <!-- / Zoom Container. -->
+      </div>
+
+    </div>
+
+  </section>
+
+  <hr>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Results</h2>
+      <div class="content has-text-justified">
+        <p>
+          We showcase some results of our inverse rendering system below on the TensoIR-synthetic dataset.
+        </p>
+      </div>
+
+      <h3 class="title">Albedo</h2>
+      <div class="content">
+        <div class="tabs-widget">
+          <div class="tabs is-centered">
+            <ul class="is-marginless">
+              <li class="is-active"><a>Armadillo</a></li>
+              <li class=""><a>Ficus</a></li>
+              <li class=""><a>Hotdog</a></li>
+              <li class=""><a>Lego</a></li>
+            </ul>
+          </div>
+          <div class="tabs-content has-text-centered">
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/armadillo_multi_albedo.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/ficus_albedo.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/hotdog_albedo.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/lego_albedo.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="title">Geometry</h2>
+      <div class="content">
+        <div class="tabs-widget">
+          <div class="tabs is-centered">
+            <ul class="is-marginless">
+              <li class="is-active"><a>Armadillo</a></li>
+              <li class=""><a>Ficus</a></li>
+              <li class=""><a>Hotdog</a></li>
+              <li class=""><a>Lego</a></li>
+            </ul>
+          </div>
+          <div class="tabs-content has-text-centered">
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/armadillo_multi_normals.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/ficus_normals.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/hotdog_normals.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/lego_normals.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <h3 class="title">Relighting</h2>
+      <div class="content">
+        <div class="tabs-widget">
+          <div class="tabs is-centered">
+            <ul class="is-marginless">
+              <li class="is-active"><a>Armadillo</a></li>
+              <li class=""><a>Ficus</a></li>
+              <li class=""><a>Hotdog</a></li>
+              <li class=""><a>Lego</a></li>
+            </ul>
+          </div>
+          <div class="tabs-content has-text-centered">
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/armadillo_multi_relight_2.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/ficus_relight_2.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/hotdog_relight_2.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
+                <source src="./supp/videos/lego_relight_2.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Acknowledgements</h2>
+      <p>
+        This work was carried out while Benjamin was an intern at Google Research.
+        Authors thank Rick Szeliski, Aleksander Holynski, and Janne Kontkanen for fruitful discussions, as well as Isabella Liu for help with TensoIR comparisons.
+        Benjamin Attal is supported by a Meta Research PhD Fellowship. Matthew O'Toole acknowledges support from NSF CAREER 2238485 and a Google gift. 
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code></code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="https://arxiv.org/abs/2308.10902">
+          <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+        </a>
+        <a class="icon-link" href="https://github.com/keunhong" disabled="">
+          <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p>
+              This means you are free to borrow the <a href="https://github.com/nerfies/nerfies.github.io">source
+                code</a> of this website,
+              we just ask that you link back to this page in the footer.
+              Please remember to remove the analytics code included in the header of the website which
+              you do not want on your website.
+            </p>
+            <p>The video comparison tool is from the <a href="https://dorverbin.github.io/refnerf/index.html">Ref-NeRF</a> project by Dor Verbin.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+
+</body></html>
