@@ -185,12 +185,13 @@
       <h2 class="title is-3">Radiance Caching for Inverse Rendering</h2>
 
       <p>
-        Radiance caching is a technique to accelerate Monte Carlo estimation of the rendering integral, by storing incoming radiance at every point in a "cache".
+        Radiance caching is a technique to accelerate Monte Carlo estimation of the rendering integral, by "caching" the distribution of incoming radiance at every point in the scene.
       </p>
       <br>
       <p>
-        A neural radiance field (NeRF) can function as a high-quality radiance cache, and one which requires fairly sparse supervision to train.
+        A neural radiance field (NeRF) can function as a high-quality radiance cache, and one which requires only sparse supervision to train.
         To illustrate, we show the distribution of incoming radiance for the 3D point intersected by the red pixel, as it sweeps across the scene.
+        The radiance for each incoming ray is queried by rendering from the NeRF cache.
       </p>
 
       <div class="columns is-mobile has-text-centered is-size-7-mobile">
@@ -213,9 +214,9 @@
       </div>
 
       <p>
-        In inverse rendering, we aim to reconstruct the scene geometry, materials, and lighting from observed images by optimizing through a differentiable rendering model.
-        A more accurate rendering model often means better reconstruction.
-        In this work, we aim to make the rendering model as physically-accurate as possible by using both <b>(a) volume rendering</b>, and <b>(b) a high-quality radiance cache</b>.
+        In <em>inverse rendering</em>, our goal is to reconstruct the scene geometry, materials, and lighting from observed images by optimizing through a differentiable rendering model.
+        A more accurate rendering model often means better reconstruction quality.
+        Here, we aim to make the rendering model as <em>physically-accurate as possible</em> by using a model that combines both <b>(a) volume rendering</b>, and <b>(b) a high-quality radiance cache</b>.
       </p>
 
   </section>
@@ -226,12 +227,12 @@
 
       <p>
         Unfortunately, high-quality radiance caches, like the one above, are often expensive to evaluate.
-        Variance reduction strategies, such as importance sampling, play an essential role in accelerating inference and decreasing rendering noise.
+        Luckily, variance reduction strategies, such as importance sampling, can help accelerate inference and decreasing rendering noise.
       </p>
       <br>
       <p>
-        In this work we leverage a vMF importance sampler of incoming illumination, which is trained to match the distribution of incoming radiance from the cache.
-        Specifically, we use an NGP to predict the parameters of a mixture of vMFs distribution for each point in space, which can produce different lobes for different light sources.
+        We leverage a vMF importance sampler of incoming illumination, which is trained to match the distribution of incoming radiance from the cache.
+        Specifically, we use an NGP to predict the parameters of a mixture of vMFs for each point in space, which can produce different lobes for different light sources.
          Because the parameters of these distributions are spatially-varying, if a light source is occluded from the perspective of one surface point, then the model can “turn off” the lobe for that light source.
       </p>
 
@@ -268,9 +269,9 @@
       </p>
       <br>
       <p>
-        Here, we an accelerated "fast cache", a cheaper cache architecture that is trained to match the more expensive NeRF cache.
-        The fast cache can be used to produce a low-noise, inexpensive, but biased estimator of the rendering integral. 
-        Combining this with the unbiased estimator from the NeRF cache can reduce noise in the final rendering, while <em>remaining unbiased.</em>
+        Specifically, we use an accelerated "fast cache", a cheaper cache architecture that is trained to match the more expensive NeRF cache.
+        The fast cache can be used to produce a low-noise but <em>biased</em> estimator of the rendering integral. 
+        Combining this with an unbiased estimator from the NeRF cache can reduce noise in the final rendering, while <em>remaining unbiased.</em>
       </p>
 
       <div class="hero-body">
@@ -303,7 +304,7 @@
       <h2 class="title is-3">Full System</h2>
 
       <p>
-        Our full for inverse rendering system combines the high-quality radiance cache, occlusion-aware importance sampling, and fast cache control variate to produce low-cost and accurate approximation of the rendering integral.
+        Our full system for inverse rendering system combines the high-quality NeRF radiance cache, occlusion-aware importance sampling, and fast cache control variate to produce low-cost and accurate approximation of the rendering integral --- all while still using a volume rendering image formation model for primary rays.
       </p>
 
       <div class="hero-body">
