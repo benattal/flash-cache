@@ -114,28 +114,25 @@
     <div class="container is-max-desktop">
       <div class="hero-body">
         <div class="columns is-mobile is-marginless has-text-centered">
-          <div class="column is-one-fourth">
-              <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
-                <source src="./supp/videos/armadillo_albedo.mp4" type="video/mp4">
-              </video>
-          </div>
-          <div class="column is-one-fourth">
-              <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
-                <source src="./supp/videos/ficus_albedo.mp4" type="video/mp4">
-              </video>
-          </div>
-          <div class="column is-one-fourth">
-              <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
-                <source src="./supp/videos/hotdog_albedo.mp4" type="video/mp4">
-              </video>
-          </div>
-          <div class="column is-one-fourth">
-              <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
-                <source src="./supp/videos/lego_albedo.mp4" type="video/mp4">
-              </video>
-          </div>
+          <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+            <source src="./supp/videos/stacked_albedo.mp4" type="video/mp4">
+          </video>
         </div>
-      </div>
+
+        <!-- <div class="columns is-mobile has-text-centered is-marginless is-size-7-mobile">
+          <div class="column">Recovered Albedo</div>
+        </div>
+
+        <div class="columns is-mobile is-marginless has-text-centered">
+          <video controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+            <source src="./supp/videos/stacked_multi_relight_2.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="columns is-mobile has-text-centered is-marginless is-size-7-mobile">
+          <div class="column">Relighting</div>
+        </div>
+      </div> -->
     </div>
   </section>
 
@@ -194,23 +191,17 @@
         The radiance for each incoming ray is queried by rendering from the NeRF cache.
       </p>
 
-      <div class="columns is-mobile has-text-centered is-size-7-mobile">
-        <div class="column is-one-half has-text-justified">
+      <div class="hero-body">
+        <div class="columns is-mobile is-marginless has-text-centered">
           <video  width=100% height=100% muted autoplay loop>
-            <source src="supp/videos/hotdog_incoming_point.mp4" type="video/mp4">
+            <source src="supp/videos/stacked_cache.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
         </div>
-        <div class="column is-one-half">
-          <video  width=100% height=100% muted autoplay loop style="margin-top: 140px;">
-            <source src="supp/videos/hotdog_incoming_cache.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
+        <div class="columns is-mobile has-text-centered is-marginless is-size-7-mobile">
+          <div class="column is-one-half">Point to visualize</div>
+          <div class="column is-one-half">NeRF cache</div>
         </div>
-      </div>
-      <div class="columns is-mobile has-text-centered is-size-7-mobile" style="margin-top: -75px;">
-        <div class="column is-one-half">Point to visualize</div>
-        <div class="column is-one-half">Incoming radiance cache</div>
       </div>
 
       <p>
@@ -220,6 +211,8 @@
       </p>
 
   </section>
+
+  <hr>
 
   <section class="section">
     <div class="container is-max-desktop">
@@ -238,26 +231,20 @@
 
       <div class="hero-body">
         <div class="columns is-mobile is-marginless has-text-centered">
-          <div class="column is-one-half">
-            <video  width=100% height=100% muted autoplay loop>
-              <source src="supp/videos/hotdog_incoming_cache.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="column is-one-half">
-            <video  width=100% height=100% muted autoplay loop>
-              <source src="supp/videos/hotdog_incoming_vmfs.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
+          <video  width=100% height=100% muted autoplay loop>
+            <source src="supp/videos/stacked_vmfs.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
         </div>
         <div class="columns is-mobile has-text-centered is-marginless is-size-7-mobile">
-          <div class="column is-one-half">NeRF Cache</div>
-          <div class="column is-one-half">VMFs</div>
+          <div class="column is-one-half">NeRF cache</div>
+          <div class="column is-one-half">vMFs</div>
         </div>
       </div>
 
   </section>
+
+  <hr>
 
   <section class="section">
     <div class="container is-max-desktop">
@@ -276,27 +263,21 @@
 
       <div class="hero-body">
         <div class="columns is-mobile is-marginless has-text-centered">
-          <div class="column is-one-half">
-            <video  width=100% height=100% muted autoplay loop>
-              <source src="supp/videos/hotdog_incoming_cache.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="column is-one-half">
-            <video  width=100% height=100% muted autoplay loop>
-              <source src="supp/videos/hotdog_incoming_flash.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
+          <video  width=100% height=100% muted autoplay loop>
+            <source src="supp/videos/stacked_flash.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
         </div>
         <div class="columns is-mobile has-text-centered is-marginless is-size-7-mobile">
-          <div class="column is-one-half">NeRF Cache</div>
-          <div class="column is-one-half">Fast Cache</div>
+          <div class="column is-one-half">NeRF cache</div>
+          <div class="column is-one-half">Fast cache</div>
         </div>
       </div>
     </div>
 
   </section>
+
+  <hr>
 
   <section class="section">
     <div class="container is-max-desktop">
@@ -390,19 +371,19 @@
 
             <div style="display: none;">
               <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/ficus_albedo.mp4" type="video/mp4">
+                <source src="./supp/videos/ficus_multi_albedo.mp4" type="video/mp4">
               </video>
             </div>
 
             <div style="">
               <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/hotdog_albedo.mp4" type="video/mp4">
+                <source src="./supp/videos/hotdog_multi_albedo.mp4" type="video/mp4">
               </video>
             </div>
 
             <div style="display: none;">
               <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/lego_albedo.mp4" type="video/mp4">
+                <source src="./supp/videos/lego_multi_albedo.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -429,19 +410,19 @@
 
             <div style="display: none;">
               <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/ficus_normals.mp4" type="video/mp4">
+                <source src="./supp/videos/ficus_multi_normals.mp4" type="video/mp4">
               </video>
             </div>
 
             <div style="">
               <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/hotdog_normals.mp4" type="video/mp4">
+                <source src="./supp/videos/hotdog_multi_normals.mp4" type="video/mp4">
               </video>
             </div>
 
             <div style="display: none;">
               <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/lego_normals.mp4" type="video/mp4">
+                <source src="./supp/videos/lego_multi_normals.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -469,19 +450,19 @@
 
             <div style="display: none;">
               <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/ficus_relight_2.mp4" type="video/mp4">
+                <source src="./supp/videos/ficus_multi_relight_2.mp4" type="video/mp4">
               </video>
             </div>
 
             <div style="">
               <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/hotdog_relight_2.mp4" type="video/mp4">
+                <source src="./supp/videos/hotdog_multi_relight_2.mp4" type="video/mp4">
               </video>
             </div>
 
             <div style="display: none;">
               <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/lego_relight_2.mp4" type="video/mp4">
+                <source src="./supp/videos/lego_multi_relight_2.mp4" type="video/mp4">
               </video>
             </div>
           </div>
