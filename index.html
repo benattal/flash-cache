@@ -207,7 +207,7 @@
       <p>
         In <em>inverse rendering</em>, our goal is to reconstruct the scene geometry, materials, and lighting from observed images by optimizing through a differentiable rendering model.
         A more accurate rendering model often means better reconstruction quality.
-        Here, we aim to make the rendering model as <em>physically-accurate as possible</em> by using a model that combines both <b>(a) volume rendering</b>, and <b>(b) a high-quality radiance cache</b>.
+        Here, we aim to make the rendering model as <em>physically-accurate as possible</em> by using a model that combines both <b>(a) volume rendering</b>, and <b>(b) physically-based Monte Carlo rendering with a high-quality radiance cache</b>.
       </p>
 
   </section>
@@ -285,7 +285,7 @@
       <h2 class="title is-3">Full System</h2>
 
       <p>
-        Our full system for inverse rendering system combines the high-quality NeRF radiance cache, occlusion-aware importance sampling, and fast cache control variate to produce low-cost and accurate approximation of the rendering integral --- all while still using a volume rendering image formation model for primary rays.
+        Our full system for inverse rendering system combines the high-quality NeRF radiance cache, occlusion-aware importance sampling, and fast cache control variate to produce low-cost and accurate approximation of the rendering integral --- while still using a volume rendering image formation model for primary rays.
       </p>
 
       <div class="hero-body">
@@ -351,124 +351,58 @@
         </p>
       </div>
 
-      <h3 class="title">Albedo</h2>
       <div class="content">
         <div class="tabs-widget">
           <div class="tabs is-centered">
             <ul class="is-marginless">
-              <li class="is-active"><a>Armadillo</a></li>
-              <li class=""><a>Ficus</a></li>
-              <li class=""><a>Hotdog</a></li>
-              <li class=""><a>Lego</a></li>
+              <li class="is-active"><a>Input</a></li>
+              <li class=""><a>Normals</a></li>
+              <li class=""><a>Albedo</a></li>
+              <li class=""><a>Roughness</a></li>
+              <li class=""><a>Relighting 1</a></li>
+              <li class=""><a>Relighting 2</a></li>
             </ul>
           </div>
           <div class="tabs-content has-text-centered">
             <div style="display: none;">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/armadillo_multi_albedo.mp4" type="video/mp4">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/stacked_input.mp4" type="video/mp4">
               </video>
             </div>
 
             <div style="display: none;">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/ficus_multi_albedo.mp4" type="video/mp4">
-              </video>
-            </div>
-
-            <div style="">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/hotdog_multi_albedo.mp4" type="video/mp4">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/stacked_normals.mp4" type="video/mp4">
               </video>
             </div>
 
             <div style="display: none;">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/lego_multi_albedo.mp4" type="video/mp4">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/stacked_albedo.mp4" type="video/mp4">
               </video>
             </div>
+
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/stacked_roughness.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/stacked_relight_1.mp4" type="video/mp4">
+              </video>
+            </div>
+
+            <div style="display: none;">
+              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="100%">
+                <source src="./supp/videos/stacked_relight_2.mp4" type="video/mp4">
+              </video>
+            </div>
+
           </div>
         </div>
       </div>
-
-      <h3 class="title">Geometry</h2>
-      <div class="content">
-        <div class="tabs-widget">
-          <div class="tabs is-centered">
-            <ul class="is-marginless">
-              <li class="is-active"><a>Armadillo</a></li>
-              <li class=""><a>Ficus</a></li>
-              <li class=""><a>Hotdog</a></li>
-              <li class=""><a>Lego</a></li>
-            </ul>
-          </div>
-          <div class="tabs-content has-text-centered">
-            <div style="display: none;">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/armadillo_multi_normals.mp4" type="video/mp4">
-              </video>
-            </div>
-
-            <div style="display: none;">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/ficus_multi_normals.mp4" type="video/mp4">
-              </video>
-            </div>
-
-            <div style="">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/hotdog_multi_normals.mp4" type="video/mp4">
-              </video>
-            </div>
-
-            <div style="display: none;">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/lego_multi_normals.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <h3 class="title">Relighting</h2>
-      <div class="content">
-        <div class="tabs-widget">
-          <div class="tabs is-centered">
-            <ul class="is-marginless">
-              <li class="is-active"><a>Armadillo</a></li>
-              <li class=""><a>Ficus</a></li>
-              <li class=""><a>Hotdog</a></li>
-              <li class=""><a>Lego</a></li>
-            </ul>
-          </div>
-          <div class="tabs-content has-text-centered">
-            <div style="display: none;">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/armadillo_multi_relight_2.mp4" type="video/mp4">
-              </video>
-            </div>
-
-            <div style="display: none;">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/ficus_multi_relight_2.mp4" type="video/mp4">
-              </video>
-            </div>
-
-            <div style="">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/hotdog_multi_relight_2.mp4" type="video/mp4">
-              </video>
-            </div>
-
-            <div style="display: none;">
-              <video id="replay-video" controls="" muted="" preload="" playsinline="" autoplay="" loop="" width="50%">
-                <source src="./supp/videos/lego_multi_relight_2.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 
